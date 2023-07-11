@@ -77,7 +77,7 @@ const MyForm = () => {
     const handleImagePreview = () => {
     const files = Array.from(photoInputRef.current.files);
     if (files.length > 7) {
-      setErrorMessage('You can only select a maximum of 7 files.');
+      setErrorMessage('You can only select a maximum of 7 files .');
       setIsSubmitDisabled(true);
       return;
     }
