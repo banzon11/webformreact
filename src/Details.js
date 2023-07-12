@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Details = ({ formData }) => {
-  const { name, email, phone, requestType, requestDesc, serviceArea, title, address, photos } = formData;
+  const { name, email, phone, requestType, requestDesc, serviceArea, title, address, photos,user_id } = formData;
 
   return (
     <div id='details'>
@@ -17,6 +17,7 @@ const Details = ({ formData }) => {
       <h2>Request Details</h2>
       <p>Title: {title}</p>
       <p>Service Area: {serviceArea}</p>
+      <p>user ID: {user_id}</p>
       <p>Request Type: {requestType}</p>
       <p>Request Description: {requestDesc}</p>
 

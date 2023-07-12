@@ -15,6 +15,7 @@
     const requestType = params.get('requestType');
     const requestDesc = params.get('requestDesc');
     const serviceArea = params.get('serviceArea');
+    const user_id = params.get('user_id');
     const title = params.get('title');
     const address = params.get('address');
     const latitude = params.get('latitude');
@@ -23,6 +24,7 @@
     // Display form details on the page
     document.write("<p><strong>Name:</strong> " + name + "</p>");
     document.write("<p><strong>Email:</strong> " + email + "</p>");
+    document.write("<p><strong>user_id:</strong> " + user_id + "</p>");
     document.write("<p><strong>Phone:</strong> " + phone + "</p>");
     document.write("<p><strong>Request Type:</strong> " + requestType + "</p>");
     document.write("<p><strong>Request Description:</strong> " + requestDesc + "</p>");

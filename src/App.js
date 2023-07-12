@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Details from './Details';
-
+const axios = require('axios');
 const MyForm = () => {
   const mapRef = useRef(null);
   const [formData, setFormData] = useState(null);
@@ -9,7 +9,8 @@ const MyForm = () => {
   const [imagePreviews, setImagePreviews] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
-
+  const [serviceAreas, setServiceAreas] = useState([]);
+  const [requestTypes, setrequestTypes] = useState([]);
   useEffect(() => {
     let map, marker;
 
@@ -130,18 +131,49 @@ const MyForm = () => {
     initMap();
   }, []);
 
-  
+  useEffect(() => {
+    const fetchServiceAreas = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/getServiceArea');
+        if (!response.ok) {
+          throw new Error('Failed to fetch service areas');
+        }
+        const data = await response.json();
+        console.log(data)
+        setServiceAreas(data);
+      } catch (error) {
+        console.log('Error fetching service areas:', error);
+      }
+    };
+    fetchServiceAreas();
+  }, []);
 
-  const handleSubmit = (event) => {
+  useEffect(() => {
+    const fetchServiceAreas = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/getRequestType');
+        if (!response.ok) {
+          throw new Error('Failed to fetch service areas');
+        }
+        const data = await response.json();
+        console.log(data)
+        setrequestTypes(data);
+      } catch (error) {
+        console.log('Error fetching service areas:', error);
+      }
+    };
+    fetchServiceAreas();
+  }, []);
+  const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission
   
     // Retrieve the form data
+    const [serviceArea, user_id] = event.target.elements.serviceArea.value.split('|');
     const name = event.target.elements.name.value;
     const email = event.target.elements.email.value;
     const phone = event.target.elements.phone.value;
     const requestType = event.target.elements.requestType.value;
     const requestDesc = event.target.elements.requestDesc.value;
-    const serviceArea = event.target.elements.serviceArea.value;
     const title = event.target.elements.title.value;
     const address = event.target.elements.address.value;
     const latitude = event.target.elements.latitude.value;
@@ -149,7 +181,40 @@ const MyForm = () => {
   
     const formData = new FormData(event.target);
     const photos = Array.from(formData.getAll('photos'));
+    const requestData = {
+      name,
+      email,
+      phone,
+      requestDesc,
+      title,
+      address,
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
+      user_id: parseInt(user_id),
+      service_id: parseInt(serviceArea),
+      request_type_id: parseInt(requestType)
+    };
 
+    try {
+      const response = await fetch('http://localhost:5000/createRequest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to submit the form');
+      }
+  
+      const data = await response.json();
+      console.log(data);
+      // Handle the response data if needed
+    } catch (error) {
+      console.log('Error submitting the form:', error);
+      // Handle the error if needed
+    }
     // Set the form data in the component state along with image previews
     setFormData({
       name,
@@ -162,9 +227,10 @@ const MyForm = () => {
       address,
       latitude,
       longitude,
-      photos
+      photos,
+      user_id
     });
-  
+    console.log(formData)
     // Update the image previews
     const previews = photos.map((file) => URL.createObjectURL(file));
     setImagePreviews(previews);
@@ -203,9 +269,23 @@ const MyForm = () => {
         
         <input type="text" id="title" placeholder='Title *' name="title" required /><br /><br />
 
-        <input type="text" id="serviceArea" placeholder='Service Area *' name="serviceArea" required /><br /><br />
+        <select id="serviceArea" name="serviceArea" required>
+  <option value="">Select Service Area *</option>
+  {serviceAreas.map((area) => (
+    <option key={area.id} value={`${area.id}|${area.user_id}`}>
+      {area.title}
+    </option>
+  ))}
+</select>
 
-        <input type="text" id="requestType" placeholder='Request Type *' name="requestType" required /><br /><br />
+<select id="requestType" name="requestType" required>
+  <option value="">Select Request Type *</option>
+  {requestTypes.map((area) => (
+    <option key={area.id} value={area.id}>
+      {area.title}
+    </option>
+  ))}
+</select>
 
         <textarea type="text" id="requestDesc" placeholder='Description *' name="requestDesc" required /><br /><br />
 
