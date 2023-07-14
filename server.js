@@ -13,7 +13,7 @@ app.use(cors()); // Enable CORS for all routes
 app.get('/getServiceArea', async (req, res) => {
   try {
     // Fetch service areas from your API
-    const response = await axios.get('https://5589-117-235-13-65.ngrok-free.app/getServiceArea');
+    const response = await axios.get('https://61a0-117-235-27-250.ngrok-free.app/getServiceArea');
     const data = response.data;
     res.json(data);
   } catch (error) {
@@ -26,7 +26,7 @@ app.get('/getServiceArea', async (req, res) => {
 app.get('/getRequestType', async (req, res) => {
   try {
     // Fetch service areas from your API
-    const response = await axios.get('https://5589-117-235-13-65.ngrok-free.app/getRequestType');
+    const response = await axios.get('https://61a0-117-235-27-250.ngrok-free.app/getRequestType');
     const data = response.data;
     res.json(data);
   } catch (error) {
@@ -39,7 +39,7 @@ app.post('/createRequest', async (req, res) => {
   try {
     // Fetch service areas from your API
     console.log(req.body)
-    const response = await axios.post('https://5589-117-235-13-65.ngrok-free.app/createRequest',req.body);
+    const response = await axios.post('https://61a0-117-235-27-250.ngrok-free.app/createRequest',req.body);
     const data = response.data;
     res.json(data);
   } catch (error) {
