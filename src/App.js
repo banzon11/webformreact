@@ -134,7 +134,7 @@ const MyForm = () => {
   useEffect(() => {
     const fetchServiceAreas = async () => {
       try {
-        const response = await fetch('https://61a0-117-235-27-250.ngrok-free.app/getServiceArea');
+        const response = await fetch('https://pythonproject1-tdrgvnyuhq-uc.a.run.app/getServiceArea');
         if (!response.ok) {
           throw new Error('Failed to fetch service areas');
         }
@@ -151,7 +151,7 @@ const MyForm = () => {
   useEffect(() => {
     const fetchServiceAreas = async () => {
       try {
-        const response = await fetch('https://61a0-117-235-27-250.ngrok-free.app/getRequestType');
+        const response = await fetch('https://pythonproject1-tdrgvnyuhq-uc.a.run.app/getRequestType');
         if (!response.ok) {
           throw new Error('Failed to fetch service areas');
         }
@@ -196,7 +196,7 @@ const MyForm = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/createRequest', {
+      const response = await fetch('https://pythonproject1-tdrgvnyuhq-uc.a.run.app/createRequest', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
