@@ -207,7 +207,31 @@ const MyForm = () => {
       if (!response.ok) {
         throw new Error('Failed to submit the form');
       }
-  
+      
+
+      const responseText = await response.text();
+
+      if (responseText === 'Success') {
+        // Form submitted successfully
+        setFormData({
+         
+            name,
+            email,
+            phone,
+            requestType,
+            requestDesc,
+            serviceArea,
+            title,
+            address,
+            latitude,
+            longitude,
+            photos,
+            user_id
+          
+          // formData values...
+        });
+       
+      }
       const data = await response.json();
       console.log(data);
       // Handle the response data if needed
